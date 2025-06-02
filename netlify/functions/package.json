@@ -4,6 +4,5 @@
   "description": "Netlify Functions for signed Cloudinary URLs",
   "main": "get-signed-url.js",
   "dependencies": {
-    "cloudinary": "^2.6.1" // Use the latest stable version, e.g., "^1.40.0"
-  }
+    "cloudinary": "^2.6.1"
 }
