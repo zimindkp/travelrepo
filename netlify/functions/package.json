@@ -1,9 +1,0 @@
-{
-  "name": "netlify-functions",
-  "version": "1.0.0",
-  "description": "Netlify Functions for signed Cloudinary URLs",
-  "main": "get-signed-url.js",
-  "dependencies": {
-    "cloudinary": "^2.6.1"
-  }
-}
