@@ -1,0 +1,846 @@
+/* style.css */
+
+/* Google Fonts Import (can be here or in HTML <head>) */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;500;600&display=swap');
+
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: #2c3e50;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+/* Container for overall layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Section */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 40px 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(30, 60, 114, 0.3);
+    position: relative;
+}
+
+/* Save Button within Header */
+.save-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.save-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Header Text Styles */
+.header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* Day Section Styling */
+.day-section {
+    background: white;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-left: 6px solid #1e3c72; /* Accent color */
+}
+
+/* Day Header Styling */
+.day-header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 20px 30px;
+    font-family: 'Playfair Display', serif;
+    /* New Itesm */
+    display: flex; /* Add flexbox to align items */
+    justify-content: space-evenly; /* Space out content and image */
+    align-items: center; /* Vertically center items */
+    position: relative;
+
+}
+
+/* This new container will hold the h2 and date, allowing them to stack */
+.day-header-text-content {
+    display:inline-flex;
+    flex-direction: column; /* Stacks children vertically */
+    /* If you had an image on the right, this flex item would take up space */
+    flex-grow: 1; /* Allow it to grow to take available space */
+}
+
+.day-header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+.day-header .date {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* New style for the day header image */
+.day-thumbnail {
+    max-width: 100px; /* Adjust as needed */
+    height: auto;
+    border-radius: 8px; /* Optional: adds rounded corners to the image */
+    margin-left: 5px; /* Space between text and image */
+    flex-shrink: 0; /* Prevents image from shrinking if space is tight */
+}
+
+/* Styling for the back to top link*/
+.back-to-top-link {
+  /*float: left;*/ /* Aligns the link to the left */
+  margin-top: 30px; /* Adjust spacing as needed */
+  text-decoration: none;
+  color: #b9c5c9;
+  font-weight: 200;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.back-to-top-link:hover {
+  text-decoration: underline;
+}
+
+/* Activities Container */
+.activities {
+    padding: 30px;
+}
+
+/* Individual Activity Styling */
+.activity {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #3498db; /* Accent color for activities */
+    transition: all 0.3s ease;
+}
+
+.activity:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.activity:last-child {
+    margin-bottom: 0;
+}
+
+/* Time Badge */
+.time {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    min-width: 80px;
+    text-align: center;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+/* Activity Content Area */
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e3c72;
+    margin-bottom: 8px;
+}
+
+.activity-details {
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.location {
+    color: #e74c3c; /* Red accent for location */
+    font-weight: 500;
+}
+
+/* Cost Information Badges */
+.cost-info {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.cost-badge {
+    background: #ecf0f1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.cost-eur {
+    background: #e8f5e8;
+    color: #27ae60; /* Green for Euro */
+}
+
+.cost-cad {
+    background: #fff3cd;
+    color: #856404; /* Yellow/Brown for CAD */
+}
+
+.status-paid {
+    background: #d4edda;
+    color: #155724; /* Dark green for Paid */
+}
+
+.status-unpaid {
+    background: #f8d7da;
+    color: #721c24; /* Dark red for Unpaid */
+}
+
+.status-pay-hotel {
+    background: #cfe2ff;
+    color: #0d6efd; /* Blue for Pay at Hotel */
+}
+
+/* Links Section */
+.links-section {
+    margin-top: 15px;
+    border: 2px dashed #3498db;
+    border-radius: 8px;
+    padding: 15px;
+    background: #f8fbff;
+}
+
+.links-title {
+    font-weight: 600;
+    color: #1e3c72;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.link-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.link-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.link-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+.add-link-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.add-link-btn:hover {
+    background: #2980b9;
+}
+
+.saved-links {
+    margin-top: 10px;
+}
+
+.saved-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border-left: 3px solid #3498db;
+}
+
+.saved-link a {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 0.85rem;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.saved-link a:hover {
+    text-decoration: underline;
+}
+
+.delete-link {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.7rem;
+}
+
+.delete-link:hover {
+    background: #c0392b;
+}
+
+/* Tickets Section */
+.tickets-section {
+    margin-top: 15px;
+    border: 2px dashed #e67e22; /* Orange accent */
+    border-radius: 8px;
+    padding: 15px;
+    background: #fef9f3;
+}
+
+.tickets-title {
+    font-weight: 600;
+    color: #d35400;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ticket-upload-area {
+    border: 2px dashed #e67e22;
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.ticket-upload-area:hover,
+.ticket-upload-area.dragover {
+    border-color: #d35400;
+    background: #fdf6f0;
+    transform: translateY(-1px);
+}
+
+.ticket-upload-area input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.uploaded-tickets {
+    margin-top: 10px;
+}
+
+.ticket-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border-left: 4px solid #e67e22;
+}
+
+.ticket-info {
+    flex: 1;
+}
+
+.ticket-name {
+    font-weight: 500;
+    color: #d35400;
+    font-size: 0.9rem;
+}
+
+.ticket-size {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.ticket-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.view-ticket,
+.delete-ticket {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.view-ticket {
+    background: #3498db;
+    color: white;
+}
+
+.view-ticket:hover {
+    background: #2980b9;
+}
+
+.delete-ticket {
+    background: #e74c3c;
+    color: white;
+}
+
+.delete-ticket:hover {
+    background: #c0392b;
+}
+
+/* Notes Section */
+.notes-section {
+    margin-top: 20px;
+    border: 2px dashed #bdc3c7; /* Grey accent */
+    border-radius: 8px;
+    padding: 15px;
+    background: #fdfdfd;
+}
+
+.notes-title {
+    font-weight: 600;
+    color: #1e3c72;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.notes-area {
+    min-height: 60px;
+    border: none;
+    background: transparent;
+    resize: vertical;
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: #666;
+    /* Allow editing directly in the div */
+    outline: none;
+    padding: 5px; /* Add some padding for better user experience */
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.notes-area:focus {
+    background-color: #f0f0f0; /* Light background on focus */
+}
+
+/* Photo Section */
+.photo-section {
+    margin-top: 15px;
+    border: 2px dashed #95a5a6; /* Grey accent */
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background: #fafafa;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.photo-section:hover,
+.photo-section.dragover {
+    border-color: #7f8c8d;
+    background: #f5f5f5;
+    transform: translateY(-1px);
+}
+
+.photo-section input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.photo-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.photo-item:hover {
+    transform: scale(1.05);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.photo-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    color: white;
+    padding: 15px 8px 8px;
+    font-size: 0.8rem;
+}
+
+.photo-caption input {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    font-size: 0.8rem;
+    outline: none; /* Remove outline on focus */
+}
+
+.photo-caption input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.delete-photo {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(231, 76, 60, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-photo:hover {
+    background: rgba(192, 57, 43, 0.9);
+}
+
+/* Photo Modal */
+.photo-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* High z-index to appear on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black background */
+    cursor: pointer;
+}
+
+.photo-modal img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+}
+
+.photo-modal .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none; /* Added to remove underline if it appears */
+}
+
+.photo-modal .close:hover {
+    color: #ccc; /* Lighter color on hover */
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+    }
+
+    .container {
+        max-width: none;
+        padding: 0;
+    }
+
+    .day-section {
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .activity {
+        page-break-inside: avoid;
+    }
+
+    .save-button {
+        display: none;
+    }
+}
+
+/* Responsive Styles for smaller screens */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .activities {
+        padding: 20px;
+    }
+
+    .activity {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .time {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+
+    .save-button {
+        position: static;
+        margin-top: 15px;
+    }
+
+    .link-input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .photo-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}
+
+.day-navigation {
+  position: fixed; /* Keeps the navigation pane in place when scrolling */
+  top: 100px;      /* Adjust as needed to position it vertically */
+  right: 20px;     /* Positions it on the right side */
+  width: 200px;    /* Set a fixed width for the navigation pane */
+  background-color: #f9f9f9; /* Light background */
+  border: 1px solid #ddd;   /* Light border */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000; /* Ensures it stays above other content */
+  max-height: 80vh; /* Adjust this value as needed, e.g., 60vh, 70vh, or a fixed pixel value */
+  overflow-y: auto;
+  padding-right: 10px; /* Adds some padding so the scrollbar doesn't touch the text */
+}
+
+.day-navigation h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+.day-navigation ul {
+  list-style: none; /* Removes bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.day-navigation ul li {
+  margin-bottom: 10px;
+}
+
+.day-navigation ul li a {
+  text-decoration: none; /* Removes underline from links */
+  color: #007bff;        /* Blue link color */
+  font-weight: 500;
+  display: block;
+  padding: 5px 0;
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.day-navigation ul li a:hover {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+/* Optional: Adjust main content width to prevent overlap with navigation */
+.container {
+  margin-right: 240px; /* Adjust based on navigation width + desired spacing */
+}
+
+.summary-section {
+    background-color: #e8f5e9; /* Light green background */
+    padding: 30px;
+    margin-bottom: 40px; /* Space below the summary section */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    gap: 30px; /* Space between summary info and map */
+    align-items: flex-start; /* Aligns items to the top */
+}
+
+.summary-info {
+    flex: 1; /* Allows it to grow and shrink */
+    min-width: 300px; /* Minimum width before wrapping */
+    color: #333;
+}
+
+.summary-info h2 {
+    font-family: 'Playfair Display', serif;
+    color: #2e7d32; /* Darker green for heading */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2.2em;
+}
+
+.summary-info p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.summary-info ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.summary-info ul li {
+    margin-bottom: 5px;
+}
+
+.overall-map {
+    flex: 1; /* Allows it to grow and shrink */
+    min-width: 350px; /* Minimum width before wrapping */
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: inset 0 1px 5px rgba(0,0,0,0.1);
+}
+
+.overall-map h3 {
+    font-family: 'Playfair Display', serif;
+    color: #4CAF50; /* A nice green for heading */
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.overall-map img {
+    max-width: 100%; /* Ensures the image is responsive */
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.overall-map small {
+    display: block;
+    color: #777;
+    font-size: 0.85em;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .summary-section {
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px;
+        padding: 20px;
+    }
+    .summary-info,
+    .overall-map {
+        min-width: unset; /* Remove min-width to allow full width */
+        width: 100%;
+    }
+}
+
+.map-container {
+            width: 100%;
+            max-width: 800px; /* Optional: Constrain width */
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+iframe {
+            width: 100%;
+            height: 450px; /* Adjust height as needed */
+            border: 0;
+}
+
