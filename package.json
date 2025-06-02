@@ -1,0 +1,12 @@
+{
+  "name": "netlify-travelitinerary-project",
+  "version": "1.0.0",
+  "description": "Root package.json for Netlify Functions",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build step required for simple functions setup'"
+  },
+  "dependencies": {
+    "cloudinary": "^2.6.1"
+  }
+}
