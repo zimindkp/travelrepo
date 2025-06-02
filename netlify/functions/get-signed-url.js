@@ -33,6 +33,7 @@ exports.handler = async (event, context) => {
         const url = cloudinary.url(publicId, {
             secure: true,
             type: "private", // or "authenticated" if you set it up that way
+            resource_type: "raw", // <--- ADD THIS LINE FOR DOCUMENTS
             sign_url: true,
             expires_at: Math.floor(Date.now() / 1000) + 3600 // URL valid for 1 hour
         });
