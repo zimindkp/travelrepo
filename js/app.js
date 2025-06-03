@@ -130,9 +130,12 @@ const updateUI = async () => {
         // --- NEW LOGIC FOR AUTHORIZATION ---
         let isUserApproved = false; // Default to not approved
 
+        // Define the SAME NAMESPACE you used in the Auth0 Action!
+        const namespace = "https://parekhitaly2025.netlify.app/"; // <--- *** USE THE SAME NAMESPACE AS YOUR ACTION! ***
+
         // --- NEW LOGIC FOR AUTHORIZATION ---
-        // Accessing app_metadata from the user profile
-        if (userProfile && userProfile.app_metadata && userProfile.app_metadata.is_approved === true) {
+        // Access the app_metadata using the namespace
+        if (userProfile && userProfile[namespace + 'app_metadata'] && userProfile[namespace + 'app_metadata'].is_approved === true) {
             isUserApproved = true;
         }
 
