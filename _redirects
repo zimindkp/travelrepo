@@ -4,4 +4,4 @@
 /login.html /login.html 200
 
 # Rule 2: Protect ALL other content and redirect to login if not logged in
-/* /login.html 302! Role=!loggedIn
+/* /login.html 302!
