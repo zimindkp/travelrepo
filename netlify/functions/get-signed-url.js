@@ -1,24 +1,36 @@
 // netlify/functions/get-signed-url.js
 const cloudinary = require('cloudinary').v2;
-// No need for 'path' module anymore
+const path = require('path'); // Required to extract the file extension (e.g., 'pdf')
 
 exports.handler = async (event, context) => {
     // Basic validation
     if (event.httpMethod !== 'POST' || !event.body) {
-        return { statusCode: 405, body: 'Method Not Allowed' };
+        return {
+            statusCode: 405,
+            body: 'Method Not Allowed'
+        };
     }
 
-    // publicId received from frontend should now be 'Italy2025/day1_day16_TS342Flight' (NO .pdf)
-    const { publicId } = JSON.parse(event.body); 
+    const { publicId } = JSON.parse(event.body); // This publicId should be 'Italy2025/day1_day16_TS342Flight.pdf'
 
     if (!publicId) {
-        return { statusCode: 400, body: 'Missing publicId in request body' };
+        return {
+            statusCode: 400,
+            body: 'Missing publicId in request body'
+        };
     }
 
-    // Determine the format. Assuming all your raw files are PDF.
-    // If you have other formats (DOCX, etc.), you'd need a more dynamic way
-    // to get this, e.g., send it from the frontend or derive it from the publicId if possible.
-    const format = 'pdf'; 
+    // Extract the file extension to use as the 'format' parameter.
+    // path.extname(publicId) returns '.pdf', so .substring(1) gets 'pdf'.
+    const fileFormat = path.extname(publicId).substring(1); 
+
+    if (!fileFormat) {
+        // Handle case where publicId might not have an extension, though in your case it should
+        return {
+            statusCode: 400,
+            body: 'Could not determine file format from publicId'
+        };
+    }
 
     try {
         cloudinary.config({
@@ -28,22 +40,21 @@ exports.handler = async (event, context) => {
         });
 
         // --- Log for debugging (check this in Netlify logs) ---
-        console.log('Public ID used for private_download_url (renamed in Cloudinary):', publicId); // Should be WITHOUT .pdf
-        console.log('Explicit format parameter:', format);
-        // --- End Log ---
+        console.log('Public ID received from frontend:', publicId);       // Should be Italy2025/day1_day16_TS342Flight.pdf
+        console.log('Inferred file format for download:', fileFormat); // Should be 'pdf'
 
         // Generate the private download URL
-        // publicId is now the identifier, and format is specified separately
+        // The second argument is the 'format' (e.g., 'pdf', 'jpg'), not 'raw'
+        // The 'raw' resource type inference happens based on the format and the specific download endpoint.
         const url = cloudinary.utils.private_download_url(
-            publicId, // This should now be 'Italy2025/day1_day16_TS342Flight'
-            'raw',    // Resource type
+            publicId,     // The full publicId including the extension (e.g., 'Italy2025/document.pdf')
+            fileFormat,   // The format of the file (e.g., 'pdf', 'docx', 'xlsx')
             {
-                format: format, // Explicitly specify the format (e.g., 'pdf')
                 expires_at: Math.floor(Date.now() / 1000) + 3600 // URL valid for 1 hour
             }
         );
 
-        console.log('Generated Private Download URL:', url); // Check this in Netlify logs
+        console.log('Generated Private Download URL:', url); // Check the generated URL's structure
 
         return {
             statusCode: 200,
