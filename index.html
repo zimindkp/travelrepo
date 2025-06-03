@@ -8,6 +8,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   </head>
   <body>
+    <div data-netlify-identity-menu></div> <!-- Optional: Show login/logout menu -->
+    <h1>Welcome to the Protected Area!</h1>
+    <p>Only logged-in users should see this content.</p>
+
+    <script>
+        // Initialize Identity (even on protected pages)
+        const identity = netlifyIdentity.init();
+
+        // Check if the user is NOT logged in when the page loads
+        if (!identity.currentUser()) {
+            console.log('User not logged in, redirecting to login page...');
+            // Store the current path so the user can be redirected back after login
+            localStorage.setItem('nf_redirect', window.location.pathname);
+            window.location.href = '/login.html'; // Redirect to your login page
+        } else {
+            console.log('User is logged in:', identity.currentUser());
+            // User is logged in, you can now show protected content or fetch user-specific data.
+        }
+
+        // Optional: Handle logout from this page
+        identity.on('logout', () => {
+            console.log('Logged out from protected page');
+            window.location.href = '/login.html';
+        });
+    </script>
     <div class="container">
       <header class="header" id="top">
         <button class="save-button" id="saveItineraryBtn">💾 Save Itinerary</button>
