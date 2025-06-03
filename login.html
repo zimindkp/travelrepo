@@ -16,24 +16,41 @@
     </div>
 
     <script>
-        const identity = netlifyIdentity.init();
+        // Wait for the DOM and all scripts (including netlify-identity-widget.js) to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const identity = netlifyIdentity.init(); // Now netlifyIdentity should be defined
 
-        identity.on('login', user => {
-            console.log('Logged in:', user);
-            // Redirect to the protected content after successful login
-            window.location.href = '/'; // Or wherever your main content is
+            identity.on('login', user => {
+                console.log('Logged in:', user);
+                // Redirect to the protected content after successful login
+                // It's good practice to redirect to the original path the user was trying to access.
+                // Netlify Identity widget helps with this by setting localStorage.
+                const redirect = localStorage.getItem('nf_redirect');
+                if (redirect) {
+                    localStorage.removeItem('nf_redirect'); // Clean up
+                    window.location.href = redirect;
+                } else {
+                    window.location.href = '/'; // Fallback to root
+                }
+            });
+
+            identity.on('logout', () => {
+                console.log('Logged out');
+                // Redirect back to login page on logout
+                window.location.href = '/login.html';
+            });
+
+            // Optional: If user is already logged in, redirect them
+            if (identity.currentUser()) {
+                const redirect = localStorage.getItem('nf_redirect');
+                if (redirect) {
+                    localStorage.removeItem('nf_redirect');
+                    window.location.href = redirect;
+                } else {
+                    window.location.href = '/';
+                }
+            }
         });
-
-        identity.on('logout', () => {
-            console.log('Logged out');
-            // Redirect back to login page on logout
-            window.location.href = '/login.html';
-        });
-
-        // Optional: If user is already logged in, redirect them
-        if (identity.currentUser()) {
-            window.location.href = '/';
-        }
     </script>
 </body>
 </html>
