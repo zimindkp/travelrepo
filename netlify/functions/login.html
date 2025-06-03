@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f0f0; }
+        .login-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Please Log In</h1>
+        <div data-netlify-identity-menu></div>
+        <div data-netlify-identity-button>Login with Netlify Identity</div>
+    </div>
+
+    <script>
+        const identity = netlifyIdentity.init();
+
+        identity.on('login', user => {
+            console.log('Logged in:', user);
+            // Redirect to the protected content after successful login
+            window.location.href = '/protected-content/'; // Or wherever your main content is
+        });
+
+        identity.on('logout', () => {
+            console.log('Logged out');
+            // Redirect back to login page on logout
+            window.location.href = '/login.html';
+        });
+
+        // Optional: If user is already logged in, redirect them
+        if (identity.currentUser()) {
+            window.location.href = '/protected-content/';
+        }
+    </script>
+</body>
+</html>
