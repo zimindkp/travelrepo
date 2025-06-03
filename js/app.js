@@ -117,14 +117,18 @@ const updateUI = async () => {
     if (logoutButton) logoutButton.disabled = !isAuthenticated;
 
     // Default to not approved unless explicitly set
-    let isUserApproved = false;
 
     if (isAuthenticated) {
         if (profileElement) profileElement.style.display = 'flex';
         const userProfile = await auth0ClientInstance.getUser();
 
+        console.log("User Profile received:", userProfile); // <--- ADD THIS LINE FOR DEBUGGING
+
         if (profileName) profileName.innerText = userProfile.name || userProfile.nickname || 'N/A';
         if (profileEmail) profileEmail.innerText = userProfile.email || 'N/A';
+
+        // --- NEW LOGIC FOR AUTHORIZATION ---
+        let isUserApproved = false; // Default to not approved
 
         // --- NEW LOGIC FOR AUTHORIZATION ---
         // Accessing app_metadata from the user profile
