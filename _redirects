@@ -1,0 +1,30 @@
+# _redirects file
+# Place this file in your site's publish directory (e.g., 'public' or 'dist')
+
+# Rule 1: Allow Netlify Identity and Git Gateway paths
+# These paths MUST be accessible for Identity to work (login, signup, etc.)
+# and for the Identity widget to function.
+/.netlify/identity/* /.netlify/identity/:splat 200
+/.netlify/git/* /.netlify/git/:splat 200
+
+# Rule 2: Allow access to the login page itself
+# If this page is protected by a general rule, you'll get an infinite loop!
+/login.html /login.html 200
+
+# Rule 3: Protect ALL other content and redirect to login if not logged in
+# This rule should be generic and come *after* specific allow rules.
+# If a user is NOT in the 'loggedIn' role, they are redirected to /login.html
+/* /login.html 302! Role=!loggedIn
+# The '!' in '!loggedIn' means "if the user does NOT have the 'loggedIn' role".
+# The '302!' forces the redirect to happen even if a file at the target path exists.
+
+# Optional: Rule 4: Grant access to specific content based on role
+# Example: If you have a protected area /dashboard/* that only 'admin' can see.
+# This rule should come BEFORE the general catch-all for unprotected content.
+# /dashboard/* /dashboard/:splat 200! Role=admin
+
+# Optional: Rule 5: Catch-all for protected content that isn't login/identity or special roles
+# If a user IS logged in but doesn't have a specific role for a page, you might
+# want to redirect them to a different "access denied" page or back to home.
+# This rule is often not strictly necessary if Rule 3 is sufficient.
+# /* /index.html 200 # If they are loggedIn, just let them see content
