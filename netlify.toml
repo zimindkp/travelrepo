@@ -4,4 +4,4 @@
   status = 200
   force = true
   # Reference the environment variable using the '$' syntax
-  conditions = {BasicAuth = [":BASIC_AUTH_CREDENTIALS"]}
+  conditions = {BasicAuth = ["kishan:Travel2025Italy"]}
