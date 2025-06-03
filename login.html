@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <!-- Load the Netlify Identity widget script.
+         It's crucial this loads BEFORE your inline script tries to use 'netlifyIdentity'. -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        /* General body styling for centering and background */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            background-color: #f0f0f0; /* Light grey background */
+            margin: 0;
+            padding: 20px; /* Padding for smaller screens */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        /* Container for the login form/widget */
+        .login-container {
+            background: white; /* White background for the card */
+            padding: 30px; /* Generous padding inside the container */
+            border-radius: 12px; /* Rounded corners for a modern look */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* Soft shadow for depth */
+            text-align: center;
+            max-width: 400px; /* Maximum width for readability on larger screens */
+            width: 100%; /* Fluid width to be responsive */
+            box-sizing: border-box;
+        }
+        /* Styling for the main heading */
+        h1 {
+            color: #333; /* Dark grey text color */
+            margin-bottom: 25px; /* Space below the heading */
+            font-size: 1.8em; /* Larger font size */
+        }
+        /* Basic styling for the Netlify Identity widget's buttons/menu.
+           The widget itself applies most of its styling, but these provide a fallback. */
+        [data-netlify-identity-button],
+        [data-netlify-identity-menu] a { /* Target the anchor tag within the menu */
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff; /* A standard blue, often associated with Netlify */
+            color: white;
+            border: none;
+            border-radius: 8px; /* Rounded corners for buttons */
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            text-decoration: none; /* Remove underline from links */
+            margin: 5px; /* Space between buttons/menu items */
+        }
+        [data-netlify-identity-button]:hover,
+        [data-netlify-identity-menu] a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Please Log In</h1>
+        <!-- This div will render the "Login with Netlify Identity" button, which opens the modal. -->
+        <div data-netlify-identity-button>Login with Netlify Identity</div>
+        <!-- The data-netlify-identity-menu div has been removed to prevent duplication. -->
+    </div>
+
+    <!-- Your custom JavaScript for Netlify Identity.
+         It MUST be placed AFTER the widget script to ensure 'netlifyIdentity' is defined. -->
+    <script>
+        // Initialize the Netlify Identity widget.
+        // This creates an 'identity' object through which you can interact with the widget.
+        const identity = netlifyIdentity.init();
+
+        // Event listener for a successful login.
+        identity.on('login', user => {
+            console.log('User logged in:', user); // Log user details for debugging
+
+            // After a successful login, we need to redirect the user.
+            // On a free Netlify plan, server-side role-based redirects are NOT active.
+            // Therefore, we rely on client-side JavaScript for redirection.
+
+            // The 'nf_redirect' localStorage item is typically set by Netlify's CDN
+            // when a *paid* role-based redirect (like `Role=!loggedIn`) occurs.
+            // Since that's not active on a free plan, this 'if (redirect)' block
+            // will likely not be triggered.
+            const redirect = localStorage.getItem('nf_redirect');
+            if (redirect) {
+                localStorage.removeItem('nf_redirect'); // Clean up the stored redirect path
+                window.location.href = redirect; // Redirect to the original page the user tried to access
+            } else {
+                // Fallback: If no specific redirect path was stored (common on free plans),
+                // redirect the user to the site's root (e.g., your index.html).
+                window.location.href = '/';
+            }
+        });
+
+        // Event listener for a logout event.
+        identity.on('logout', () => {
+            console.log('User logged out'); // Log logout for debugging
+            // After logout, redirect the user back to the login page.
+            window.location.href = '/login.html';
+        });
+
+        // Optional: Check if the user is already logged in when this 'login.html' page loads.
+        // If they are, redirect them away from the login page to the main content.
+        if (identity.currentUser()) {
+            console.log('User already logged in, redirecting from login page...');
+            const redirect = localStorage.getItem('nf_redirect');
+            if (redirect) {
+                localStorage.removeItem('nf_redirect');
+                window.location.href = redirect;
+            } else {
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>
