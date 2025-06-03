@@ -100,7 +100,6 @@ const updateUI = async () => {
         console.warn("updateUI called before auth0ClientInstance is ready.");
         document.getElementById('btn-login').disabled = true;
         document.getElementById('btn-logout').disabled = true;
-        // Keep protected content hidden if client is not ready
         const protectedContent = document.getElementById('protected-content');
         if (protectedContent) protectedContent.style.display = 'none';
         return;
@@ -112,27 +111,50 @@ const updateUI = async () => {
     const profileElement = document.getElementById('profile');
     const profileName = document.getElementById('profile-name');
     const profileEmail = document.getElementById('profile-email');
-    const protectedContent = document.getElementById('protected-content'); // Get the protected content div
+    const protectedContent = document.getElementById('protected-content');
 
     if (loginButton) loginButton.disabled = isAuthenticated;
     if (logoutButton) logoutButton.disabled = !isAuthenticated;
 
+    // Default to not approved unless explicitly set
+    let isUserApproved = false;
+
     if (isAuthenticated) {
-        if (profileElement) profileElement.style.display = 'block';
+        if (profileElement) profileElement.style.display = 'flex';
         const userProfile = await auth0ClientInstance.getUser();
+
         if (profileName) profileName.innerText = userProfile.name || userProfile.nickname || 'N/A';
         if (profileEmail) profileEmail.innerText = userProfile.email || 'N/A';
 
-        // Show protected content
-        if (protectedContent) protectedContent.style.display = 'block';
+        // --- NEW LOGIC FOR AUTHORIZATION ---
+        // Accessing app_metadata from the user profile
+        if (userProfile && userProfile.app_metadata && userProfile.app_metadata.is_approved === true) {
+            isUserApproved = true;
+        }
 
-    } else {
+        // Show protected content ONLY if authenticated AND approved
+        // Make sure user has the isapproved metadata in their profile from auth0
+        if (protectedContent) {
+            if (isUserApproved) {
+                protectedContent.style.display = 'block';
+                document.getElementById('message').innerText = 'Welcome! You have access to protected content.';
+                document.getElementById('message').style.color = 'green';
+            } else {
+                protectedContent.style.display = 'none';
+                document.getElementById('error').innerText = 'You are logged in, but you do not have permission to view this content.';
+                document.getElementById('error').style.color = 'red';
+            }
+        }
+
+    } else { // Not authenticated
         if (profileElement) profileElement.style.display = 'none';
         if (profileName) profileName.innerText = '';
         if (profileEmail) profileEmail.innerText = '';
 
-        // Hide protected content
         if (protectedContent) protectedContent.style.display = 'none';
+        // Clear messages if not logged in
+        document.getElementById('message').innerText = '';
+        document.getElementById('error').innerText = '';
     }
 };
 
