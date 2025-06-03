@@ -1,8 +1,7 @@
 # _redirects file
 
-# Rule 1: Allow access to the login page itself (must be first!)
+# Rule 1: Allow access to the login page itself
 /login.html /login.html 200
 
-# Rule 2: TEMPORARY - Redirect ALL other content to login.html
-# This rule has NO role condition, so it should apply to everyone.
-/* /login.html 302!
+# Rule 2: Protect ALL other content and redirect to login if not logged in
+/* /login.html 302! Role=!loggedIn
