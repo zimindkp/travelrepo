@@ -2,9 +2,6 @@
 <html>
 <head>
     <title>Login</title>
-    <!-- Load the Netlify Identity widget script.
-         It's crucial this loads BEFORE your inline script tries to use 'netlifyIdentity'. -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         /* General body styling for centering and background */
         body {
@@ -62,58 +59,63 @@
         <h1>Please Log In</h1>
         <!-- This div will render the "Login with Netlify Identity" button, which opens the modal. -->
         <div data-netlify-identity-button>Login with Netlify Identity</div>
-        <!-- The data-netlify-identity-menu div has been removed to prevent duplication. -->
     </div>
 
+    <!-- Load the Netlify Identity widget script here, just before your inline script.
+         This ensures it's fully loaded and executed before your code tries to use 'netlifyIdentity'. -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
     <!-- Your custom JavaScript for Netlify Identity.
-         It MUST be placed AFTER the widget script to ensure 'netlifyIdentity' is defined. -->
+         It MUST be placed AFTER the widget script AND at the end of the body
+         to ensure 'netlifyIdentity' is defined when you call .init(). -->
     <script>
+        console.log('login.html: Script started.');
+
         // Initialize the Netlify Identity widget.
-        // This creates an 'identity' object through which you can interact with the widget.
         const identity = netlifyIdentity.init();
+        console.log('login.html: Netlify Identity initialized.');
 
         // Event listener for a successful login.
         identity.on('login', user => {
-            console.log('User logged in:', user); // Log user details for debugging
+            console.log('login.html: === LOGIN EVENT FIRED ==='); // CRITICAL: Check if this appears
+            console.log('login.html: User logged in:', user);
 
-            // After a successful login, we need to redirect the user.
-            // On a free Netlify plan, server-side role-based redirects are NOT active.
-            // Therefore, we rely on client-side JavaScript for redirection.
-
-            // The 'nf_redirect' localStorage item is typically set by Netlify's CDN
-            // when a *paid* role-based redirect (like `Role=!loggedIn`) occurs.
-            // Since that's not active on a free plan, this 'if (redirect)' block
-            // will likely not be triggered.
             const redirect = localStorage.getItem('nf_redirect');
+            console.log('login.html: nf_redirect from localStorage:', redirect);
+
             if (redirect) {
                 localStorage.removeItem('nf_redirect'); // Clean up the stored redirect path
+                console.log('login.html: Redirecting to stored path:', redirect);
                 window.location.href = redirect; // Redirect to the original page the user tried to access
             } else {
-                // Fallback: If no specific redirect path was stored (common on free plans),
-                // redirect the user to the site's root (e.g., your index.html).
+                console.log('login.html: No stored redirect path, redirecting to root (/).');
                 window.location.href = '/';
             }
         });
 
         // Event listener for a logout event.
         identity.on('logout', () => {
-            console.log('User logged out'); // Log logout for debugging
-            // After logout, redirect the user back to the login page.
+            console.log('login.html: User logged out. Redirecting to login page.');
             window.location.href = '/login.html';
         });
 
         // Optional: Check if the user is already logged in when this 'login.html' page loads.
-        // If they are, redirect them away from the login page to the main content.
         if (identity.currentUser()) {
-            console.log('User already logged in, redirecting from login page...');
+            console.log('login.html: User already logged in on page load.');
             const redirect = localStorage.getItem('nf_redirect');
             if (redirect) {
                 localStorage.removeItem('nf_redirect');
+                console.log('login.html: Redirecting to stored path from page load:', redirect);
                 window.location.href = redirect;
             } else {
+                console.log('login.html: Redirecting to root (/) from page load.');
                 window.location.href = '/';
             }
+        } else {
+            console.log('login.html: No user logged in on page load, displaying login prompt.');
         }
+
+        console.log('login.html: Script finished setup.');
     </script>
 </body>
 </html>
