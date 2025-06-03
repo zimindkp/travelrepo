@@ -25,13 +25,15 @@
     <p id="message"></p>
     <p id="error"></p>
     <!-- end of auth integration -->
-    <div class="container">
-      <header class="header" id="top">
-        <button class="save-button" id="saveItineraryBtn">💾 Save Itinerary</button>
-        <button class="print-button" id="printItineraryBtn">🖨️ Print Itinerary</button>
-        <h1>Parekh Italy Trip 2025</h1>
-        <p>June 11 - June 26, 2025 • Una Bella Avventura</p>
-      </header>
+    <div id="protected-content" style="display: none;">
+        <h2>Protected Content</h2>
+        <div class="container">
+          <header class="header" id="top">
+            <button class="save-button" id="saveItineraryBtn">💾 Save Itinerary</button>
+            <button class="print-button" id="printItineraryBtn">🖨️ Print Itinerary</button>
+            <h1>Parekh Italy Trip 2025</h1>
+            <p>June 11 - June 26, 2025 • Una Bella Avventura</p>
+          </header>
 
       <section class="summary-section">
         <div class="summary-info">
@@ -1753,7 +1755,7 @@
         </div>
       </section>
 
-      <section class="day-section" id="day-16">
+        <section class="day-section" id="day-16">
         <div class="day-header">
           <div class="day-header-text-content">
             <h2>Day 16 - Departure Day</h2>
@@ -1795,77 +1797,79 @@
             </div>
           </article>
 
-          <article class="activity">
-            <div class="time">12:00</div>
-            <div class="activity-content">
-              <h3 class="activity-title">Flight to Toronto - Air Transat</h3>
-              <p class="activity-details">
-                <span class="location">Lamezia Terme → Toronto Pearson</span> • Duration: 10 hours<br>
-                Flight TS 343 • Economy Class • A330-200
-              </p>
+            <article class="activity">
+              <div class="time">12:00</div>
+              <div class="activity-content">
+                <h3 class="activity-title">Flight to Toronto - Air Transat</h3>
+                <p class="activity-details">
+                  <span class="location">Lamezia Terme → Toronto Pearson</span> • Duration: 10 hours<br>
+                  Flight TS 343 • Economy Class • A330-200
+                </p>
 
-              <div class="links-section">
-                <h4 class="links-title">🔗 Flight Links & References</h4>
-                <div class="link-input-group">
-                  <input type="text" class="link-input" placeholder="Enter link title (e.g., 'Boarding Pass', 'Check-in')">
-                  <input type="url" class="link-input" placeholder="Enter URL">
-                  <button class="add-link-btn">Add Link</button>
+                <div class="links-section">
+                  <h4 class="links-title">🔗 Flight Links & References</h4>
+                  <div class="link-input-group">
+                    <input type="text" class="link-input" placeholder="Enter link title (e.g., 'Boarding Pass', 'Check-in')">
+                    <input type="url" class="link-input" placeholder="Enter URL">
+                    <button class="add-link-btn">Add Link</button>
+                  </div>
+                  <div class="saved-links"></div>
                 </div>
-                <div class="saved-links"></div>
-              </div>
 
-              <div class="tickets-section">
-                <h4 class="tickets-title">🎫 Flight Tickets & Boarding Passes</h4>
-                <div class="ticket-upload-area">
-                  <input type="file" id="flightticketupload" multiple accept=".pdf,.jpg,.jpeg,.png,.gif">
-                  📄 Click to upload or drag & drop flight documents<br>
-                  <small>Boarding passes, tickets, confirmations</small>
+                <div class="tickets-section">
+                  <h4 class="tickets-title">🎫 Flight Tickets & Boarding Passes</h4>
+                    <div class="ticket-upload-area">
+                      <input type="file" id="flightticketupload" multiple accept=".pdf,.jpg,.jpeg,.png,.gif">
+                      📄 Click to upload or drag & drop flight documents<br>
+                      <small>Boarding passes, tickets, confirmations</small>
+                    </div>
+                  <div class="uploaded-tickets"></div>
                 </div>
-                <div class="uploaded-tickets"></div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="activity">
-            <div class="time">18:00</div>
-            <div class="activity-content">
-              <h3 class="activity-title">Arrive in Toronto</h3>
-              <p class="activity-details">
-                <span class="location">Toronto Pearson International Airport</span>
-              </p>
-            </div>
-          </article>
-
-          <article class="activity">
-            <div class="time">18:45</div>
-            <div class="activity-content">
-              <h3 class="activity-title">Taxi/Limo Home</h3>
-              <p class="activity-details">
-                <span class="location">Pearson Airport → Bolton</span> • Duration: 30 minutes
-              </p>
-              <div class="cost-info">
-                <span class="cost-badge cost-cad">$100.00 CAD</span>
-                <span class="cost-badge status-unpaid">To Pay</span>
+            <article class="activity">
+              <div class="time">18:00</div>
+              <div class="activity-content">
+                <h3 class="activity-title">Arrive in Toronto</h3>
+                <p class="activity-details">
+                  <span class="location">Toronto Pearson International Airport</span>
+                </p>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <div class="notes-section">
-            <h4 class="notes-title">📝 Day 16 Notes & Reminders</h4>
-            <div class="notes-area" contenteditable="true">
-              • Check out of agriturismo by 10:30AM<br>
-              • Return rental car with full tank of gas<br>
-              • Arrive at airport 3 hours early for international flight<br>
-              • Keep important documents and valuables in carry-on<br>
-              • Notify taxi/limo service of actual arrival time<br>
-              • Welcome home after an amazing Italian adventure!
+            <article class="activity">
+              <div class="time">18:45</div>
+              <div class="activity-content">
+                <h3 class="activity-title">Taxi/Limo Home</h3>
+                <p class="activity-details">
+                  <span class="location">Pearson Airport → Bolton</span> • Duration: 30 minutes
+                </p>
+                <div class="cost-info">
+                  <span class="cost-badge cost-cad">$100.00 CAD</span>
+                  <span class="cost-badge status-unpaid">To Pay</span>
+                </div>
+              </div>
+            </article>
+
+            <div class="notes-section">
+              <h4 class="notes-title">📝 Day 16 Notes & Reminders</h4>
+                <div class="notes-area" contenteditable="true">
+                  • Check out of agriturismo by 10:30AM<br>
+                  • Return rental car with full tank of gas<br>
+                  • Arrive at airport 3 hours early for international flight<br>
+                  • Keep important documents and valuables in carry-on<br>
+                  • Notify taxi/limo service of actual arrival time<br>
+                  • Welcome home after an amazing Italian adventure!
+                </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div> <nav class="day-navigation">
-      <h4>Quick Navigation</h4>
-      <ul>
+        </section>
+      </div> <!-- End of Container that holds all the days activities -->
+     
+      <nav class="day-navigation">
+        <h4>Quick Navigation</h4>
+        <ul>
             <li><a href="#day-1">Day 1 - Departure</a></li>
             <li><a href="#day-2">Day 2 - Arrival in Italy</a></li>
             <li><a href="#day-3">Day 3 - Relax in Tropea</a></li>
@@ -1883,12 +1887,15 @@
             <li><a href="#day-15">Day 15 - Thermal Baths & Winery Tour</a></li>
             <li><a href="#day-16">Day 16 - Departure Day</a></li>
         </ul>
-    </nav>
+      </nav>
 
-    <div class="photo-modal" id="photoModal">
-      <span class="close" id="closeModalBtn">×</span>
-      <img src="" alt="Full size photo" id="fullSizePhoto">
-    </div>
+      <div class="photo-modal" id="photoModal">
+        <span class="close" id="closeModalBtn">X</span>
+        <img src="" alt="Full size photo" id="fullSizePhoto">
+      </div>
+    </div><!-- END OF PROTECTED CONTENT -->
+
+
     <!-- auth0 integration, calling from CDN -->
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
     <script src="js/app.js"></script>
