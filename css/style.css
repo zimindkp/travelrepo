@@ -844,3 +844,90 @@ iframe {
             border: 0;
 }
 
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    /* CHANGE 1: Align items to the start (left) */
+    justify-content: flex-start; /* Was space-between */
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    /* CHANGE 2: Add a gap between the header elements */
+    gap: 20px;
+}
+
+header h1 {
+    margin: 0; /* Keep this to remove default h1 margin */
+    font-size: 1.8em;
+    /* You might want to add some margin to the left of the title if you want
+       more separation from the auth controls */
+    /* margin-left: 20px; */
+}
+
+.auth-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* No change needed here, as it controls spacing *within* the auth controls */
+}
+
+.auth-controls button {
+    background-color: #007bff; /* Blue button */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.auth-controls button:hover:not(:disabled) {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.auth-controls button:disabled {
+    background-color: #cccccc; /* Grey for disabled buttons */
+    cursor: not-allowed;
+}
+
+#profile {
+    display: flex; /* For profile picture and text */
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #555; /* Darker border for profile */
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #444; /* Slightly lighter than header */
+    font-size: 0.9em;
+}
+
+#profile p {
+    margin: 0; /* Remove default paragraph margin */
+}
+
+#profile img { /* If you add a profile picture later */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+#message, #error {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#message {
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green */
+    border: 1px solid #c3e6cb;
+}
+
+#error {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    border: 1px solid #f5c6cb;
+}
