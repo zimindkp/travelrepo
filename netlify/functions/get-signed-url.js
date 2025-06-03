@@ -49,7 +49,9 @@ exports.handler = async (event, context) => {
         const url = cloudinary.utils.private_download_url(
             publicId,     // The full publicId including the extension (e.g., 'Italy2025/document.pdf')
             fileFormat,   // The format of the file (e.g., 'pdf', 'docx', 'xlsx')
-            {
+            {   
+                // --- ADD THIS LINE TO FORCE RESOURCE TYPE TO 'raw' ---
+                resource_type: 'raw', 
                 expires_at: Math.floor(Date.now() / 1000) + 3600 // URL valid for 1 hour
             }
         );
