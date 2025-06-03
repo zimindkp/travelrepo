@@ -21,7 +21,7 @@
         identity.on('login', user => {
             console.log('Logged in:', user);
             // Redirect to the protected content after successful login
-            window.location.href = '/index.html'; // Or wherever your main content is
+            window.location.href = '/'; // Or wherever your main content is
         });
 
         identity.on('logout', () => {
@@ -32,7 +32,7 @@
 
         // Optional: If user is already logged in, redirect them
         if (identity.currentUser()) {
-            window.location.href = '/index.html';
+            window.location.href = '/';
         }
     </script>
 </body>
