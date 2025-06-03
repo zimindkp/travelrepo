@@ -33,7 +33,6 @@ const configureAuth0AndSetupUI = async () => {
             clientId: config.clientId,
             authorizationParams: {
                 redirect_uri: window.location.origin,
-                // audience: "YOUR_AUTH0_API_IDENTIFIER", // Uncomment if using API
                 // scope: "openid profile email" // Add scopes as needed
             }
         });
