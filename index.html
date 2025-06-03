@@ -12,27 +12,6 @@
     <h1>Welcome to the Protected Area!</h1>
     <p>Only logged-in users should see this content.</p>
 
-    <script>
-        // Initialize Identity (even on protected pages)
-        const identity = netlifyIdentity.init();
-
-        // Check if the user is NOT logged in when the page loads
-        if (!identity.currentUser()) {
-            console.log('User not logged in, redirecting to login page...');
-            // Store the current path so the user can be redirected back after login
-            localStorage.setItem('nf_redirect', window.location.pathname);
-            window.location.href = '/login.html'; // Redirect to your login page
-        } else {
-            console.log('User is logged in:', identity.currentUser());
-            // User is logged in, you can now show protected content or fetch user-specific data.
-        }
-
-        // Optional: Handle logout from this page
-        identity.on('logout', () => {
-            console.log('Logged out from protected page');
-            window.location.href = '/login.html';
-        });
-    </script>
     <div class="container">
       <header class="header" id="top">
         <button class="save-button" id="saveItineraryBtn">💾 Save Itinerary</button>
@@ -1901,5 +1880,55 @@
     <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
     <!-- Javascript -->
     <script src="js/script.js"></script>
+
+    <!-- Load the Netlify Identity widget script here, just before your inline script.
+    This ensures it's fully loaded and executed before your code tries to use 'netlifyIdentity'. -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+        <!-- Your custom JavaScript for Netlify Identity.
+         It MUST be placed AFTER the widget script AND at the end of the body
+         to ensure 'netlifyIdentity' is defined when you call .init(). -->
+    <script>
+        // Wrap the entire script in window.onload to ensure all external resources,
+        // including the Netlify Identity widget, are fully loaded before execution.
+        window.onload = function() {
+            // Initialize the Netlify Identity widget.
+            const identity = netlifyIdentity.init();
+            const userInfoDisplay = document.getElementById('userInfo');
+
+            // Function to update user info display
+            function updateUserInfo(user) {
+                if (user) {
+                    userInfoDisplay.textContent = `Logged in as: ${user.email}`;
+                } else {
+                    userInfoDisplay.textContent = 'You are not logged in.';
+                }
+            }
+
+            // Check if the user is NOT logged in when the page loads
+            // This is the client-side protection for a free Netlify plan.
+            if (!identity.currentUser()) {
+                console.log('Index Page: User not logged in, redirecting to login page...');
+                // Store the current path so the user can be redirected back after login
+                localStorage.setItem('nf_redirect', window.location.pathname);
+                window.location.href = '/login.html'; // Redirect to your login page
+            } else {
+                console.log('Index Page: User is logged in:', identity.currentUser());
+                updateUserInfo(identity.currentUser());
+                // User is logged in, you can now show protected content or fetch user-specific data.
+            }
+
+            // Event listener for a logout event from this page.
+            identity.on('logout', () => {
+                console.log('Index Page: User logged out, redirecting to login page');
+                window.location.href = '/login.html';
+            });
+
+            // Event listener for a login event (in case user logs in from this page, though unlikely)
+            identity.on('login', user => {
+                console.log('Index Page: User logged in from this page:', user);
+                updateUserInfo(user);
+            });
+        }; // End of window.onload function
+    </script>
   </body>
 </html>
