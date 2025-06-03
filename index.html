@@ -9,18 +9,17 @@
   </head>
   <body>
     <!-- auth0 integration -->
-    <h1>Welcome to Travel Repo!</h1>
+    <header>
+        <div class="auth-controls">
+            <button id="btn-login">Log In</button>
+            <button id="btn-logout" disabled>Log Out</button>
 
-    <div class="auth-buttons">
-        <button id="btn-login">Log In</button>
-        <button id="btn-logout" disabled>Log Out</button>
-    </div>
-
-    <div id="profile" style="display: none;">
-        <h2>User Profile</h2>
-        <p>Name: <span id="profile-name"></span></p>
-        <p>Email: <span id="profile-email"></span></p>
-    </div>
+            <div id="profile" style="display: none;">
+                <p>Hello, <span id="profile-name"></span></p>
+            </div>
+        </div>
+		
+    </header>
 
     <p id="message"></p>
     <p id="error"></p>
