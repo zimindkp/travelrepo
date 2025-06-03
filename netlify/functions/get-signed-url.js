@@ -1,9 +1,7 @@
 // netlify/functions/get-signed-url.js
 const cloudinary = require('cloudinary').v2;
-// No need for 'path' module if we are keeping the extension in publicId
 
 exports.handler = async (event, context) => {
-    // Ensure this is a POST request and has the necessary data
     if (event.httpMethod !== 'POST' || !event.body) {
         return {
             statusCode: 405,
@@ -11,7 +9,7 @@ exports.handler = async (event, context) => {
         };
     }
 
-    const { publicId } = JSON.parse(event.body); // Keep publicId as sent by frontend (with extension)
+    const { publicId } = JSON.parse(event.body); // This publicId will be 'Italy2025/day1_day16_TS342Flight.pdf'
 
     if (!publicId) {
         return {
@@ -21,37 +19,26 @@ exports.handler = async (event, context) => {
     }
 
     try {
-        // Configure Cloudinary with your credentials
         cloudinary.config({
             cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
             api_key: process.env.CLOUDINARY_API_KEY,
             api_secret: process.env.CLOUDINARY_API_SECRET
-            // Ensure no other global transformation parameters are here
-            // e.g., no 'secure_distribution' unless explicitly needed and signed
         });
 
-        // --- Remove the extension stripping logic ---
-        // (If you put it back from my previous suggestion)
-        // const ext = path.extname(publicId);
-        // if (ext) {
-        //     publicId = publicId.substring(0, publicId.length - ext.length);
-        // }
-        // --- End removal of extension stripping logic ---
+        // --- Verify this log in Netlify Function logs ---
+        console.log('Public ID being passed to private_download_url (as-is from frontend):', publicId);
+        // This log should show 'Italy2025/day1_day16_TS342Flight.pdf'
 
-        // Generate a private download URL for the raw asset
-        // Public ID MUST include the file extension (e.g., 'Italy2025/myfile.pdf')
-        // No transformation parameters should be passed.
         const url = cloudinary.utils.private_download_url(
-            publicId, // Use the publicId exactly as it is in Cloudinary (with .pdf extension)
-            'raw',    // Specify the resource_type as 'raw' for documents
+            publicId, // Use publicId exactly as it is (including the .pdf extension)
+            'raw',    // Specify the resource_type as 'raw'
             {
                 expires_at: Math.floor(Date.now() / 1000) + 3600 // URL valid for 1 hour
-                // Ensure NO other parameters that could be interpreted as transformations are here.
-                // E.g., no 'width', 'height', 'crop', 'quality', 'fetch_format', etc.
+                // Ensure no other parameters that could be interpreted as transformations are here.
             }
         );
 
-        console.log('Generated Private Download URL:', url); // Log the final URL
+        console.log('Generated Private Download URL:', url);
 
         return {
             statusCode: 200,
@@ -60,9 +47,8 @@ exports.handler = async (event, context) => {
         };
     } catch (error) {
         console.error("Error generating private download URL:", error);
-        // Log more details if available in the error object
         if (error.http_code && error.error && error.error.message) {
-             console.error(`Cloudinary Error: HTTP ${error.http_code} - ${error.error.message}`);
+             console.error(`Cloudinary Error Details: HTTP ${error.http_code} - ${error.error.message}`);
         }
         return {
             statusCode: 500,
