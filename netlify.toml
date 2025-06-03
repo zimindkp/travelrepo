@@ -1,0 +1,7 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html" # Or wherever your default content is
+  status = 200
+  force = true
+  # Reference the environment variable using the '$' syntax
+  conditions = {BasicAuth = [":BASIC_AUTH_CREDENTIALS"]}
