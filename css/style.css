@@ -690,6 +690,7 @@ body {
 }
 
 /* Optional: Overlay to dim background when nav is open */
+/* --- Overlay --- */
 .overlay {
     display: none;
     position: fixed;
@@ -698,13 +699,17 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 999; /* Below nav, above content */
+    z-index: 1000; /* Between nav and button */
 }
 
 .overlay.active {
     display: block;
 }
 
+/* --- No Scroll Body --- */
+body.no-scroll {
+    overflow: hidden;
+}
 
 .day-navigation h4 {
   margin-top: 0;
@@ -827,10 +832,10 @@ body {
     border: none;
     cursor: pointer;
     padding: 10px;
-    position: absolute; /* Position relative to header or viewport */
+    position: fixed; /* Position relative to header or viewport */
     top: 15px; /* Adjust as needed */
     right: 15px; /* Adjust as needed */
-    z-index: 1001; /* Ensure it's above other content */
+    z-index: 1002; /* Ensure it's above other content */
 }
 
 .hamburger-icon {
@@ -895,12 +900,6 @@ body {
         display: block;
     }
 
-    /* Hide the fixed navigation from the main content flow when open */
-    .container {
-        margin-right: 0; /* Remove the margin added for desktop nav */
-        transition: margin-right 0.3s ease-in-out; /* Smooth transition */
-    }
-
     /* Adjust container margin when navigation is active */
     /* You likely don't need this if it's an overlay menu */
     /* .container.nav-open {
@@ -908,9 +907,22 @@ body {
     } */
 
     /* Override any specific fixed positioning that might conflict */
+    /* Navigation pane default hidden position on mobile */
     .day-navigation {
-        /* On mobile, might want it to come from the side/top */
-        /* already set to right: -250px and top: 0 */
+        right: -250px; /* Hide completely off-screen on mobile when not active */
+        /* width: 70%; /* Optional: Make it take a percentage of screen width */
+        /* max-width: 280px; /* Optional: Cap its max width */
+    }
+
+    /* Navigation pane active (visible) position on mobile */
+    .day-navigation.active {
+        right: 0; /* Slide into view on mobile */
+    }
+
+    /* Hide the fixed navigation from the main content flow when open */
+    .container {
+        margin-right: 0; /* Remove the margin added for desktop nav */
+        transition: margin-right 0.3s ease-in-out; /* Smooth transition */
     }
 
     .summary-section {
@@ -923,11 +935,6 @@ body {
         min-width: unset; /* Remove min-width to allow full width */
         width: 100%;
     }
-}
-
-/* Optional: Prevent body scroll when navigation is open (mobile) */
-body.no-scroll {
-    overflow: hidden;
 }
 
 .map-container {

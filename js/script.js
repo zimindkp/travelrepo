@@ -314,15 +314,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle initial state on page load or resize if it's mobile
     // This is important if you reload on a mobile size and nav is open.
     // Also, handle if the screen resizes from mobile to desktop
+    // REVISED handleResize FUNCTION
     function handleResize() {
-        if (window.innerWidth > 768) { // Desktop view
+        // If the window is wider than the mobile breakpoint (e.g., desktop)
+        if (window.innerWidth > 768) {
+            // Ensure navigation is always closed and remove mobile-specific classes
             dayNavigation.classList.remove('active');
             navToggle.classList.remove('active');
             body.classList.remove('no-scroll');
             overlay.classList.remove('active');
-            // container.classList.remove('nav-open');
+            // Ensure ARIA attribute is correct for desktop default (closed)
+            navToggle.setAttribute('aria-expanded', false);
         }
-        // else { // Mobile view, keep current state or reset if desired }
+        // If window is within mobile breakpoint, ensure it starts closed if not already
+        // This might be redundant if the initial CSS state is correct, but safe
+        else {
+            if (!dayNavigation.classList.contains('active') && !navToggle.classList.contains('active')) {
+                 // Do nothing, let it remain closed initially.
+                 // The toggleNavigation() will open it on click.
+            }
+        }
     }
 
     window.addEventListener('resize', handleResize);
