@@ -836,15 +836,51 @@ body.no-scroll {
     top: 15px; /* Adjust as needed */
     right: 15px; /* Adjust as needed */
     z-index: 1002; /* Ensure it's above other content */
+    /* --- ENSURE THESE ARE APPLIED --- */
+    position: fixed; /* This makes it stick to the viewport */
+    top: 15px;       /* Distance from the top of the viewport */
+    right: 15px;     /* Distance from the right of the viewport */
+    z-index: 1002;   /* Keep it on top of everything */
+    /* -------------------------------- */
+    /* Add transition for rotation (already have this) */
+    transition: transform 0.3s ease-in-out;
 }
 
 .hamburger-icon {
     display: block;
     width: 25px;
     height: 3px;
-    background-color: white; /* Or your preferred color */
+    background-color: #00008B; /* <-- CHANGE THIS TO DARK BLUE */
     margin: 5px 0;
+    border-radius: 2px;
+    transition: background-color 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+}
+
+.hamburger-icon::before,
+.hamburger-icon::after {
+    content: '';
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #00008B; /* <-- CHANGE THIS TO DARK BLUE */
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    transition: transform 0.3s ease-in-out, top 0.3s ease-in-out;
+}
+
+.hamburger-icon::before {
+    top: -8px;
+}
+
+.hamburger-icon::after {
+    top: 8px;
+}
+
+/* X Button (when active) Styles - no change here, background-color becomes transparent */
+.nav-toggle.active .hamburger-icon {
+    background-color: transparent; /* Middle line disappears for X */
 }
 
 /* Optional: Animation for the hamburger icon on active/open state */
