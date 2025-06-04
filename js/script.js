@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // FOr navigation pane
 document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.querySelector('.nav-toggle');
-    const dayNavigation = document.getElementById('dayNavigation');
+    const dayNavigation = document.getElementById('daynavigation');
     const body = document.body;
     const container = document.querySelector('.container'); // Get your main content container
 
