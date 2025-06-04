@@ -273,69 +273,58 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const container = document.querySelector('.container'); // Get your main content container
 
-    // Optional: Create and append the overlay
-    const overlay = document.createElement('div');
-    overlay.classList.add('overlay');
-    document.body.appendChild(overlay);
+// --- START OF NEW CONDITIONAL BLOCK ---
+    // Only proceed with navigation logic if both the toggle button and navigation pane exist on the page
+    if (navToggle && dayNavigation) {
 
-    function toggleNavigation() {
-        dayNavigation.classList.toggle('active');
-        navToggle.classList.toggle('active'); // For hamburger icon animation
-        body.classList.toggle('no-scroll'); // Prevent body scroll
-        overlay.classList.toggle('active'); // Show/hide overlay
+        // Optional: Create and append the overlay - this is safe to do inside here
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        document.body.appendChild(overlay); // body is guaranteed to exist
 
-        // Optional: Adjust main container margin (if you chose this method)
-        // container.classList.toggle('nav-open');
+        function toggleNavigation() {
+            dayNavigation.classList.toggle('active');
+            navToggle.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+            overlay.classList.toggle('active'); // Toggle overlay too
+            navToggle.setAttribute('aria-expanded', dayNavigation.classList.contains('active'));
+        }
 
-        // Update ARIA expanded state for accessibility
-        const isExpanded = dayNavigation.classList.contains('active');
-        navToggle.setAttribute('aria-expanded', isExpanded);
-    }
-
-    // Add event listener to the toggle button
-    if (navToggle) { // Check if the button exists on the page
+        // Add event listener to the toggle button
         navToggle.addEventListener('click', toggleNavigation);
-    }
 
-    // Optional: Close nav when clicking outside (on the overlay)
-    if (overlay) {
+        // Optional: Close nav when clicking outside (on the overlay)
         overlay.addEventListener('click', toggleNavigation);
-    }
 
-    // Optional: Close nav if a navigation link is clicked (assuming internal links)
-    dayNavigation.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (dayNavigation.classList.contains('active')) {
-                toggleNavigation(); // Close navigation after clicking a link
-            }
+        // Optional: Close nav if a navigation link is clicked (assuming internal links)
+        // Ensure dayNavigation exists before querySelectorAll (already checked by the outer if)
+        dayNavigation.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (dayNavigation.classList.contains('active')) {
+                    toggleNavigation(); // Close navigation after clicking a link
+                }
+            });
         });
-    });
 
-    // Handle initial state on page load or resize if it's mobile
-    // This is important if you reload on a mobile size and nav is open.
-    // Also, handle if the screen resizes from mobile to desktop
-    // REVISED handleResize FUNCTION
-    function handleResize() {
-        // If the window is wider than the mobile breakpoint (e.g., desktop)
-        if (window.innerWidth > 768) {
-            // Ensure navigation is always closed and remove mobile-specific classes
-            dayNavigation.classList.remove('active');
-            navToggle.classList.remove('active');
-            body.classList.remove('no-scroll');
-            overlay.classList.remove('active');
-            // Ensure ARIA attribute is correct for desktop default (closed)
-            navToggle.setAttribute('aria-expanded', false);
-        }
-        // If window is within mobile breakpoint, ensure it starts closed if not already
-        // This might be redundant if the initial CSS state is correct, but safe
-        else {
-            if (!dayNavigation.classList.contains('active') && !navToggle.classList.contains('active')) {
-                 // Do nothing, let it remain closed initially.
-                 // The toggleNavigation() will open it on click.
+        // Handle initial state on page load or resize if it's mobile
+        function handleResize() {
+            // Check if dayNavigation exists (already checked by outer if, but good to be explicit here too)
+            if (dayNavigation) {
+                if (window.innerWidth > 768) { // Desktop view
+                    dayNavigation.classList.remove('active');
+                    navToggle.classList.remove('active');
+                    body.classList.remove('no-scroll');
+                    overlay.classList.remove('active');
+                    navToggle.setAttribute('aria-expanded', false);
+                }
+                // Else (mobile view): let CSS handle default hidden state, toggle opens on click
             }
         }
-    }
 
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Call on initial load
-});
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Call on initial load to set correct state
+    }
+    // --- END OF NEW CONDITIONAL BLOCK ---
+    // If navToggle or dayNavigation are null, this script block simply does nothing, preventing the TypeError.
+    }  
+);
