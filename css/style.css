@@ -34,6 +34,8 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    margin-right: 250px; /* Space for the fixed nav (220px nav width + 30px margin) */
+    transition: margin-right 0.3s ease-in-out;
 }
 
 /* Header Section */
@@ -667,11 +669,7 @@ body {
     .header h1 {
         font-size: 2rem;
     }
-
-    .container {
-        padding: 10px;
-    }
-
+    
     .activities {
         padding: 20px;
     }
@@ -707,7 +705,7 @@ body {
 .day-navigation {
     position: fixed;
     top: 0; /* Changed from 100px to animate from top */
-    right: -250px; /* NEW: Start off-screen (adjust width + buffer) */
+    right: 20px; /* NEW: Start off-screen (adjust width + buffer) */
     width: 220px; /* Consistent width for movement */
     background-color: #f9f9f9;
     border: 1px solid #ddd;
