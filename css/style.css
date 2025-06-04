@@ -455,6 +455,7 @@ body {
     padding: 15px;
     background: #fdfdfd;
     display: flex;
+    flex-direction: column; /* Add this line */
 }
 
 .notes-title {
