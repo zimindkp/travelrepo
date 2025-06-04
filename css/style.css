@@ -864,7 +864,52 @@ body.no-scroll {
 /* Media Queries for Mobile Responsiveness */
 /* --------------------------------------------------- */
 @media (max-width: 768px) { /* Adjust breakpoint as needed */
-    .header h1 {
+
+    /* 1. Show the hamburger button */
+    .nav-toggle {
+        display: block;
+    }
+
+    /* 2. Set the default hidden state for the navigation pane on mobile */
+    .day-navigation {
+        right: -250px; /* Hide off-screen by default on mobile */
+        /* Make sure its width is defined here or globally so it's not 0 */
+        width: 220px; /* Or whatever width you want for your mobile nav */
+        /* Ensure other mobile base styles like top, background-color, etc. are correct */
+        top: 0;
+        max-height: 100vh;
+        overflow-y: auto;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 999; /* Lower than overlay and button */
+        transition: right 0.3s ease-in-out; /* Keep the transition */
+    }
+
+    /* 3. This rule MUST come AFTER the general .day-navigation rule above,
+          and it adds the "active" state to bring it into view. */
+    .day-navigation.active {
+        right: 0; /* Slide into view when active */
+    }
+
+    /* Hide the fixed navigation from the main content flow when open */
+    .container {
+        margin-right: 0; /* Remove the margin added for desktop nav */
+        transition: margin-right 0.3s ease-in-out; /* Smooth transition */
+    }
+
+    .summary-section {
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px;
+        padding: 20px;
+    }
+    .summary-info,
+    .overall-map {
+        min-width: unset; /* Remove min-width to allow full width */
+        width: 100%;
+    }
+
+        .header h1 {
         font-size: 2rem;
     }
     
@@ -894,46 +939,6 @@ body.no-scroll {
 
     .photo-gallery {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    }
-    /* Show the toggle button on mobile */
-    .nav-toggle {
-        display: block;
-    }
-
-    /* Adjust container margin when navigation is active */
-    /* You likely don't need this if it's an overlay menu */
-    /* .container.nav-open {
-        margin-right: 220px;
-    } */
-
-    /* Override any specific fixed positioning that might conflict */
-    /* Navigation pane default hidden position on mobile */
-    .day-navigation {
-        right: -250px; /* Hide completely off-screen on mobile when not active */
-        /* width: 70%; /* Optional: Make it take a percentage of screen width */
-        /* max-width: 280px; /* Optional: Cap its max width */
-    }
-
-    /* Navigation pane active (visible) position on mobile */
-    .day-navigation.active {
-        right: 0; /* Slide into view on mobile */
-    }
-
-    /* Hide the fixed navigation from the main content flow when open */
-    .container {
-        margin-right: 0; /* Remove the margin added for desktop nav */
-        transition: margin-right 0.3s ease-in-out; /* Smooth transition */
-    }
-
-    .summary-section {
-        flex-direction: column; /* Stack items vertically */
-        gap: 20px;
-        padding: 20px;
-    }
-    .summary-info,
-    .overall-map {
-        min-width: unset; /* Remove min-width to allow full width */
-        width: 100%;
     }
 }
 
