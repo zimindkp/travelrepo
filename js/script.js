@@ -269,13 +269,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // FOr navigation pane
 document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.querySelector('.nav-toggle');
-    const dayNavigation = document.getElementById('daynavigation');
+    const daynavigation = document.getElementById('daynavigation');
     const body = document.body;
     const container = document.querySelector('.container'); // Get your main content container
 
 // --- START OF NEW CONDITIONAL BLOCK ---
     // Only proceed with navigation logic if both the toggle button and navigation pane exist on the page
-    if (navToggle && dayNavigation) {
+    if (navToggle && daynavigation) {
 
         // Optional: Create and append the overlay - this is safe to do inside here
         const overlay = document.createElement('div');
@@ -283,11 +283,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(overlay); // body is guaranteed to exist
 
         function toggleNavigation() {
-            dayNavigation.classList.toggle('active');
+            daynavigation.classList.toggle('active');
             navToggle.classList.toggle('active');
             body.classList.toggle('no-scroll');
             overlay.classList.toggle('active'); // Toggle overlay too
-            navToggle.setAttribute('aria-expanded', dayNavigation.classList.contains('active'));
+            navToggle.setAttribute('aria-expanded', daynavigation.classList.contains('active'));
         }
 
         // Add event listener to the toggle button
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Optional: Close nav if a navigation link is clicked (assuming internal links)
         // Ensure dayNavigation exists before querySelectorAll (already checked by the outer if)
-        dayNavigation.querySelectorAll('a').forEach(link => {
+        daynavigation.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 if (dayNavigation.classList.contains('active')) {
                     toggleNavigation(); // Close navigation after clicking a link
@@ -309,9 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Handle initial state on page load or resize if it's mobile
         function handleResize() {
             // Check if dayNavigation exists (already checked by outer if, but good to be explicit here too)
-            if (dayNavigation) {
+            if (daynavigation) {
                 if (window.innerWidth > 768) { // Desktop view
-                    dayNavigation.classList.remove('active');
+                    daynavigation.classList.remove('active');
                     navToggle.classList.remove('active');
                     body.classList.remove('no-scroll');
                     overlay.classList.remove('active');
@@ -325,6 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
         handleResize(); // Call on initial load to set correct state
     }
     // --- END OF NEW CONDITIONAL BLOCK ---
-    // If navToggle or dayNavigation are null, this script block simply does nothing, preventing the TypeError.
+    // If navToggle or daynavigation are null, this script block simply does nothing, preventing the TypeError.
     }  
 );
