@@ -80,7 +80,6 @@ body {
     margin-bottom: 30px;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    overflow: visible;
     border-left: 6px solid #1e3c72; /* Accent color */
 }
 
