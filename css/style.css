@@ -890,6 +890,7 @@ body.no-scroll {
           and it adds the "active" state to bring it into view. */
     .day-navigation.active {
         right: 0; /* Slide into view when active */
+        z-index: 1001
     }
 
     /* Hide the fixed navigation from the main content flow when open */
