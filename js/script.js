@@ -74,18 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
     //     ticketArea.addEventListener('drop', function(e) { /* ... */ });
     // });
 
-    // Auto-resize textareas (for notes-area)
-    document.querySelectorAll('.notes-area').forEach(textarea => {
-        // Initial resize for existing content
-        textarea.style.height = 'auto';
-        textarea.style.height = textarea.scrollHeight + 'px';
-        // Add input event listener for dynamic resizing
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = this.scrollHeight + 'px';
-        });
-    });
-
     // Keyboard Shortcuts
     document.addEventListener('keydown', function(e) {
         // Ctrl+S to save
