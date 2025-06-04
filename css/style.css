@@ -701,21 +701,47 @@ body {
     }
 }
 
+/* --------------------------------------------------- */
+/* Existing .day-navigation styles (with modifications for mobile) */
+/* --------------------------------------------------- */
 .day-navigation {
-  position: fixed; /* Keeps the navigation pane in place when scrolling */
-  top: 100px;      /* Adjust as needed to position it vertically */
-  right: 20px;     /* Positions it on the right side */
-  width: 200px;    /* Set a fixed width for the navigation pane */
-  background-color: #f9f9f9; /* Light background */
-  border: 1px solid #ddd;   /* Light border */
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  z-index: 1000; /* Ensures it stays above other content */
-  max-height: 80vh; /* Adjust this value as needed, e.g., 60vh, 70vh, or a fixed pixel value */
-  overflow-y: auto;
-  padding-right: 10px; /* Adds some padding so the scrollbar doesn't touch the text */
+    position: fixed;
+    top: 0; /* Changed from 100px to animate from top */
+    right: -250px; /* NEW: Start off-screen (adjust width + buffer) */
+    width: 220px; /* Consistent width for movement */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-height: 100vh; /* Adjust for full height on mobile */
+    overflow-y: auto;
+    padding-right: 10px;
+    transition: right 0.3s ease-in-out; /* NEW: Add transition for smooth slide */
 }
+
+/* Class to make navigation visible */
+.day-navigation.active {
+    right: 0; /* NEW: Slide into view */
+}
+
+/* Optional: Overlay to dim background when nav is open */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Below nav, above content */
+}
+
+.overlay.active {
+    display: block;
+}
+
 
 .day-navigation h4 {
   margin-top: 0;
@@ -829,8 +855,37 @@ body {
     font-size: 0.85em;
 }
 
-/* Media query for smaller screens */
-@media (max-width: 768px) {
+/* --------------------------------------------------- */
+/* Media Queries for Mobile Responsiveness */
+/* --------------------------------------------------- */
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    /* Show the toggle button on mobile */
+    .nav-toggle {
+        display: block;
+    }
+
+    /* Hide the fixed navigation from the main content flow when open */
+    .container {
+        margin-right: 0; /* Remove the margin added for desktop nav */
+        transition: margin-right 0.3s ease-in-out; /* Smooth transition */
+    }
+
+    /* Adjust container margin when navigation is active */
+    .container.nav-open {
+        /* Add margin to push content when nav is open, matching nav width */
+        margin-right: 220px; /* Same as .day-navigation width */
+        /* You might want to also add transform: translateX(-220px); to the container
+           if you want the content to slide left with the nav,
+           but margin-right is simpler for pushing.
+           Or, simply prevent scroll for body when nav is open (see JS) */
+    }
+
+    /* Override any specific fixed positioning that might conflict */
+    .day-navigation {
+        /* On mobile, might want it to come from the side/top */
+        /* already set to right: -250px and top: 0 */
+    }
+
     .summary-section {
         flex-direction: column; /* Stack items vertically */
         gap: 20px;
@@ -841,6 +896,11 @@ body {
         min-width: unset; /* Remove min-width to allow full width */
         width: 100%;
     }
+}
+
+/* Optional: Prevent body scroll when navigation is open (mobile) */
+body.no-scroll {
+    overflow: hidden;
 }
 
 .map-container {
@@ -942,4 +1002,42 @@ header h1 {
     background-color: #f8d7da; /* Light red */
     color: #721c24; /* Dark red */
     border: 1px solid #f5c6cb;
+}
+
+
+/* --------------------------------------------------- */
+/* NEW: Mobile Navigation Toggle Button Styles */
+/* --------------------------------------------------- */
+.nav-toggle {
+    display: none; /* Hide by default on larger screens */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    position: absolute; /* Position relative to header or viewport */
+    top: 15px; /* Adjust as needed */
+    right: 15px; /* Adjust as needed */
+    z-index: 1001; /* Ensure it's above other content */
+}
+
+.hamburger-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white; /* Or your preferred color */
+    margin: 5px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Optional: Animation for the hamburger icon on active/open state */
+.nav-toggle.active .hamburger-icon:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.nav-toggle.active .hamburger-icon:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active .hamburger-icon:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }

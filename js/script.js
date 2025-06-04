@@ -264,3 +264,67 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 });
+
+
+// FOr navigation pane
+document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.querySelector('.nav-toggle');
+    const dayNavigation = document.getElementById('dayNavigation');
+    const body = document.body;
+    const container = document.querySelector('.container'); // Get your main content container
+
+    // Optional: Create and append the overlay
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    document.body.appendChild(overlay);
+
+    function toggleNavigation() {
+        dayNavigation.classList.toggle('active');
+        navToggle.classList.toggle('active'); // For hamburger icon animation
+        body.classList.toggle('no-scroll'); // Prevent body scroll
+        overlay.classList.toggle('active'); // Show/hide overlay
+
+        // Optional: Adjust main container margin (if you chose this method)
+        // container.classList.toggle('nav-open');
+
+        // Update ARIA expanded state for accessibility
+        const isExpanded = dayNavigation.classList.contains('active');
+        navToggle.setAttribute('aria-expanded', isExpanded);
+    }
+
+    // Add event listener to the toggle button
+    if (navToggle) { // Check if the button exists on the page
+        navToggle.addEventListener('click', toggleNavigation);
+    }
+
+    // Optional: Close nav when clicking outside (on the overlay)
+    if (overlay) {
+        overlay.addEventListener('click', toggleNavigation);
+    }
+
+    // Optional: Close nav if a navigation link is clicked (assuming internal links)
+    dayNavigation.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (dayNavigation.classList.contains('active')) {
+                toggleNavigation(); // Close navigation after clicking a link
+            }
+        });
+    });
+
+    // Handle initial state on page load or resize if it's mobile
+    // This is important if you reload on a mobile size and nav is open.
+    // Also, handle if the screen resizes from mobile to desktop
+    function handleResize() {
+        if (window.innerWidth > 768) { // Desktop view
+            dayNavigation.classList.remove('active');
+            navToggle.classList.remove('active');
+            body.classList.remove('no-scroll');
+            overlay.classList.remove('active');
+            // container.classList.remove('nav-open');
+        }
+        // else { // Mobile view, keep current state or reset if desired }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Call on initial load
+});
