@@ -1,0 +1,23 @@
+# Uploading to cloudinary
+
+```
+
+cd C:\Users\xyz\Cloudinary> ls
+
+    Directory: C:\Users\xyz\Cloudinary
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----           11/6/2025    13:06                documents
+d----            2/6/2025    15:35                node_modules
+-a---            2/6/2025    19:48            121 .env
+-a---            2/6/2025    15:35           2168 package-lock.json
+-a---            2/6/2025    15:35            323 package.json
+-a---            2/6/2025    19:51           3421 upload_docs.js
+
+PS C:\Users\xyz\Cloudinary> node .\upload_docs.js    
+```
+1. add the files to upload to documents folder above. 
+2. run the upload_docs.js script as shown above
+
+ensure you have api key and secret in the .env file
